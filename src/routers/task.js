@@ -43,17 +43,17 @@ router.get("/tasks", auth, async (req, resp) => {
     if (req.query.completed) {
       match.completed = req.query.completed === "true";
     }
-    if (req.query.sortBy) {
-      const parts = req.query.sortBy.split(":");
+    // if (req.query.sortBy) {
+    //   const parts = req.query.sortBy.split(":");
 
-      sort[parts[0]] = parts[1] === "asc" ? 1 : -1;
-    }
+    //   sort[parts[0]] = parts[1] === "asc" ? 1 : -1;
+    // }
     await req.user
       .populate({
         path: "tasks", // coming from user model
         match,
         options: {
-          limit: parseInt(req.query.limitparts[1]),
+          limit: parseInt(req.query.limit),
           skip: parseInt(req.query.skip),
           sort,
         },
