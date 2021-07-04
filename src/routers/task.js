@@ -81,7 +81,7 @@ router.get("/tasks/:id", auth, async (req, resp) => {
 
     resp.send(task);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 // Delete task by Id
@@ -95,7 +95,7 @@ router.delete("/tasks/:id", auth, async (req, resp) => {
     if (!task) return resp.status(404).send();
     resp.send(task);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -129,7 +129,7 @@ router.patch("/tasks/:id", auth, async (req, resp) => {
 
     resp.send(task);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 

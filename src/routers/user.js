@@ -19,8 +19,7 @@ router.post("/users", async (req, resp) => {
     await user.save();
     resp.status(201).send({ user, token });
   } catch (error) {
-    console.log(error);
-    resp.status(400).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -55,7 +54,7 @@ router.get("/users/:id", async (req, resp) => {
 
     resp.send(user);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -76,7 +75,7 @@ router.patch("/users/me", auth, async (req, resp) => {
 
     resp.send(req.user);
   } catch (error) {
-    resp.status(400).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -128,7 +127,7 @@ router.delete("/users/me", auth, async (req, resp) => {
     await req.user.remove();
     resp.send(req.user);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -147,7 +146,7 @@ router.post("/users/login", async (req, resp) => {
     const token = await user.generateAuthToken();
     resp.send({ user, token }); // getPublicFields is an userdefined function in model
   } catch (error) {
-    resp.status(400).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -162,7 +161,7 @@ router.post("/users/logout", auth, async (req, resp) => {
     await req.user.save();
     resp.send();
   } catch (error) {
-    resp.send(500).send();
+    resp.status(500).send({ error: error.message });
   }
 });
 // log out all active session
@@ -172,7 +171,7 @@ router.post("/users/logoutAll", auth, async (req, resp) => {
     await req.user.save();
     resp.send();
   } catch (error) {
-    resp.send(500).send();
+    resp.status(500).send({ error: error.message });
   }
 });
 
@@ -230,7 +229,7 @@ router.get("/users/:id/avatar", async (req, resp) => {
     resp.set("Content-Type", "image/png");
     resp.send(user.avatar);
   } catch (error) {
-    resp.send(500).send();
+    resp.status(500).send({ error: error.message });
   }
 });
 
