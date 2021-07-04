@@ -62,7 +62,7 @@ router.get("/tasks", auth, async (req, resp) => {
 
     resp.send(req.user.tasks);
   } catch (error) {
-    resp.status(500).send(error);
+    resp.status(500).send({ error: error.message });
   }
 });
 
