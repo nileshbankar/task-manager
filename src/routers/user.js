@@ -146,7 +146,7 @@ router.post("/users/login", async (req, resp) => {
     const token = await user.generateAuthToken();
     resp.send({ user, token }); // getPublicFields is an userdefined function in model
   } catch (error) {
-    resp.status(500).send({ error: error.message });
+    resp.status(400).send({ error: error.message });
   }
 });
 
